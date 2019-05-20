@@ -1,0 +1,14 @@
+{
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "kinesis:PutRecord",
+            "Resource": "arn:aws:kinesis:ap-northeast-1:932446063073:stream/RootAccess"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::932446063073:role/CWLtoKinesisRole"
+        }
+    ]
+}
