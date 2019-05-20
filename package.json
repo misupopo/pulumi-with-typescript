@@ -1,5 +1,8 @@
 {
     "name": "aws-typescript",
+    "scripts": {
+        "build-ts": "tsc"
+    },
     "devDependencies": {
         "@types/node": "latest"
     },

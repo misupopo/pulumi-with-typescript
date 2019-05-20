@@ -1,28 +1,24 @@
 {
     "compilerOptions": {
-        "outDir": "bin",
+        "module": "commonjs",
+        "esModuleInterop": true,
         "target": "es6",
-        "lib": [
-            "es6"
-        ],
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "dist",
         "baseUrl": ".",
         "paths": {
+            "*": [
+                "node_modules/*",
+                "src/types/*"
+            ],
             "@module/*": [
                 "src/module/*"
             ]
-        },
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "experimentalDecorators": true,
-        "pretty": true,
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "forceConsistentCasingInFileNames": true,
-        "strictNullChecks": true
+        }
     },
-    "files": [
-        "index.ts"
+    "include": [
+        "src/**/*"
     ]
 }
