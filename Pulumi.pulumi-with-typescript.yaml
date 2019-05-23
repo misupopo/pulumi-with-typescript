@@ -1,3 +1,4 @@
 encryptionsalt: v1:BG5Z77JWhpk=:v1:EqN/tCLi/nrd6ZZM:KmpSQI9IQdeW7uoqVgBGnRJIi4amSw==
 config:
+  aws:profile: home
   aws:region: ap-northeast-1
