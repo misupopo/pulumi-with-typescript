@@ -1,17 +1,25 @@
 import * as aws from "@pulumi/aws";
+import * as pulumi from '@pulumi/pulumi';
 
 class DynamoDB {
-    create(): void {
+    create(): pulumi.CustomResource {
         const counterTable = new aws.dynamodb.Table("counterTable", {
-            attributes: [
-                { name: "Id", type: "S" },
-            ],
-            hashKey: "Id",
+            name: 'counterTable',
             readCapacity: 1,
             writeCapacity: 1,
+            hashKey: 'Id',
+            streamEnabled: true,
+            streamViewType: "NEW_AND_OLD_IMAGES",
+            attributes: [
+                {
+                    name: "Id",
+                    type: "S"
+                },
+            ],
         });
+
+        return counterTable;
     }
 }
 
-const dynamoDB = new DynamoDB();
-module.exports.dynamoDB = dynamoDB;
+export const dynamoDB = new DynamoDB();

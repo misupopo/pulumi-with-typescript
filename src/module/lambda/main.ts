@@ -2,9 +2,10 @@ import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
 
 class Lambda {
-    create(zipPath: string): void {
+    create(zipPath: string): pulumi.CustomResource {
         // lambdaを作成する
-        const createLambda = new aws.lambda.Function('mylambda', {
+        const lambda = new aws.lambda.Function('mylambda', {
+            name: 'mylambda',
             runtime: aws.lambda.NodeJS8d10Runtime,
             code: new pulumi.asset.AssetArchive({
                 // "index.js": new pulumi.asset.StringAsset("./publish/test.js"),
@@ -15,6 +16,8 @@ class Lambda {
             handler: 'index.handler',
             role: 'arn:aws:iam::932446063073:role/service-role/executeSlackLambda',
         });
+
+        return lambda;
     };
 }
 

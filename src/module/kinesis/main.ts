@@ -1,19 +1,17 @@
 import * as aws from "@pulumi/aws";
+import * as pulumi from '@pulumi/pulumi';
 
 class Kinesis {
-    create(): void {
-        // kinesisを作成する
-        const stream = new aws.kinesis.Stream("mystream", {
-            shardCount: 1
+    create(): pulumi.CustomResource {
+        // subscription用のkinesisを作成する
+        const subscriptionKinesisStream = new aws.kinesis.Stream("subscriptionKinesisStream", {
+            name: "subscriptionKinesisStream",
+            shardCount: 1,
+            retentionPeriod: 168
         });
 
-        // subscription用のkinesisを作成する
-        const subscriptionKinesisStream = new aws.kinesis.Stream("RootAccess", {
-            name: "RootAccess",
-            shardCount: 1
-        });
+        return subscriptionKinesisStream;
     }
 }
 
-const kinesis = new Kinesis();
-module.exports.kinesis = kinesis;
+export const kinesis = new Kinesis();

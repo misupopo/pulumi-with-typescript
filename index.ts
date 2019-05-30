@@ -4,14 +4,41 @@ import * as awsx from "@pulumi/awsx";
 // import * as network from '@module/network/main';
 import {network} from './src/module/network/main';
 import {lambda} from './src/module/lambda/main';
+import {lambdaEventSourceMapping} from './src/module/lambdaEventSourceMapping/main';
+import {dynamoDB} from './src/module/dynamodb/main';
 import {ecr} from './src/module/ecr/main';
+import {kinesis} from './src/module/kinesis/main';
+import {subscriptionFilter} from './src/module/subscriptionFilter/main';
+
+const lambdaZipFilePath = './publish/test.js.zip';
 
 (async () => {
-    // lambda.create('./publish/test.js.zip');
+
+
+    // lambda.create(lambdaZipFilePath);
 
     // network.create();
 
-    ecr.create();
+    // ecr.create();
+
+    const dynamoDBCreateValue: any = dynamoDB.create();
+
+    const lambdaCreateValue: any = lambda.create(lambdaZipFilePath);
+
+    // lambdaを紐づける
+    lambdaEventSourceMapping.create({
+        streamArn: dynamoDBCreateValue.streamArn,
+        functionName: lambdaCreateValue.arn
+    });
+
+    const kinesisCreateValue: any = kinesis.create();
+
+
+
+    // subscriptionFilter.create({
+    //     destinationArn: kinesisCreateValue.arn,
+    //     roleArn: 'arn:aws:iam::932446063073:role/service-role/executeSlackLambda'
+    // });
 
 })();
 

@@ -18,5 +18,5 @@ class CloudWatchLogs {
     }
 }
 
-const cloudWatchLogs = new CloudWatchLogs();
-module.exports.clouwdWatchLogs = cloudWatchLogs;
+export const cloudWatchLogs = new CloudWatchLogs();
+
