@@ -1,8 +1,9 @@
 import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
+import * as pulumi from '@pulumi/pulumi';
 
 class Network {
-    create(): void {
+    create(): pulumi.CustomResource {
         // vpcを作成
         const vpc = new aws.ec2.Vpc("custom1-vpc", {
             cidrBlock: "10.51.0.0/16",
@@ -107,6 +108,8 @@ class Network {
             routeTableId: publicRouteTable.id,
             subnetId: publicSubnet.id,
         });
+
+        return vpc;
     }
 }
 
