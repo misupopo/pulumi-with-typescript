@@ -1,18 +1,6 @@
-import * as pulumi from "@pulumi/pulumi";
-import * as aws from "@pulumi/aws";
-import * as awsx from "@pulumi/awsx";
-// import * as network from '@module/network/main';
-import {network} from './src/module/network/main';
-import {lambda} from './src/module/lambda/main';
-import {lambdaEventSourceMapping} from './src/module/lambdaEventSourceMapping/main';
-import {dynamoDB} from './src/module/dynamodb/main';
-import {ecr} from './src/module/ecr/main';
-import {kinesis} from './src/module/kinesis/main';
-import {subscriptionFilter} from './src/module/subscriptionFilter/main';
-import {ecsCluster} from './src/module/ecsCluster/main';
-import {iam} from './src/module/iam/main';
+import {ec2Component} from './src/component/ec2/main';
 
-const lambdaZipFilePath = './publish/test.js.zip';
+// const lambdaZipFilePath = './publish/test.js.zip';
 
 (async () => {
 
@@ -42,12 +30,6 @@ const lambdaZipFilePath = './publish/test.js.zip';
     //     roleArn: 'arn:aws:iam::932446063073:role/service-role/executeSlackLambda'
     // });
 
-    iam.create();
-
+    ec2Component.run();
 })();
-
-
-
-
-
 

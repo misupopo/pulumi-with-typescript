@@ -3,7 +3,10 @@ import * as awsx from "@pulumi/awsx";
 import * as pulumi from '@pulumi/pulumi';
 
 class Network {
-    create(): pulumi.CustomResource {
+    create(): {
+        vpc: pulumi.CustomResource,
+        publicSubnet: pulumi.CustomResource
+    } {
         // vpcを作成
         const vpc = new aws.ec2.Vpc("custom1-vpc", {
             cidrBlock: "10.51.0.0/16",
@@ -38,7 +41,6 @@ class Network {
                 Name: "custom1_gateway"
             },
         });
-
 
         // const igw = new aws.ec2.InternetGateway("my-igw", {
         //     vpcId: vpc.id,
@@ -109,7 +111,10 @@ class Network {
             subnetId: publicSubnet.id,
         });
 
-        return vpc;
+        return {
+            vpc,
+            publicSubnet
+        };
     }
 }
 

@@ -1,8 +1,7 @@
 import * as aws from "@pulumi/aws";
-import * as pulumi from '@pulumi/pulumi';
 
 class Ec2 {
-    create(crateValue: any): pulumi.CustomResource {
+    create(createValue: any): void {
 
         // AmazonEC2FullAccess
         // AmazonEC2ReadOnlyAccess
@@ -11,9 +10,24 @@ class Ec2 {
 
         // ec2インスタンスを作成
         const ec2Instance = new aws.ec2.Instance("customEc2Instance", {
-            instanceType: "t2.nano",
+            ami: 'ami-0008a301',
+            instanceType: 't2.nano',
+            iamInstanceProfile: 'customRole',
+            keyName: 'test',
+            associatePublicIpAddress: true,
+            vpcSecurityGroupIds: [
+                createValue.securityGroup.id
+            ],
+            subnetId: createValue.publicSubnet.id,
+            privateIp: '10.31.30.30',
 
-        })
+            tags: {
+                Name: "customEc2Instance",
+                AutoStop: 'true',
+                monitoring: 'yes',
+                env: 'dev'
+            }
+        });
     }
 }
 

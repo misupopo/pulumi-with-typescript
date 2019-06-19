@@ -70,11 +70,21 @@ class IAM {
             role: role,
             policyArn: 'arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess'
         });
-        //
-        // const cloudWatchLogsFullAccess = new aws.iam.RolePolicyAttachment("cloudWatchLogsFullAccess", {
-        //     role: role,
-        //     policyArn: 'arn:aws:iam::aws:policy/CloudWatchLogsFullAccess'
-        // });
+
+        // 二つ目がつかない場合があるので注意
+        // タイミングの問題かもしれない
+        const cloudWatchLogsFullAccess = new aws.iam.RolePolicyAttachment("cloudWatchLogsFullAccess", {
+            role: role,
+            policyArn: 'arn:aws:iam::aws:policy/CloudWatchLogsFullAccess'
+        });
+
+        // インスタンスプロファイルを作成する
+        // これがないとEC2インスタンスを作成することができない
+        // インスタンスプロファイルはEC2インスタンスに情報を引き渡すためのコンテナ
+        const customRoleProfile = new aws.iam.InstanceProfile("customRoleProfile", {
+            name: role.name,
+            role: role.name,
+        });
 
         // ポリシーが二つ以上つかないため保留
         // const policyData = [
